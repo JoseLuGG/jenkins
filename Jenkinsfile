@@ -45,14 +45,11 @@ pipeline {
         }
 
         stage('Construir imagen Docker') {
-            steps {
-            }
+
         }
 
         stage('Desplegar en Kubernetes') {
-            steps {
 
-            }
         }
     }
 
