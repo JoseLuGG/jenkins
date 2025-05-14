@@ -44,13 +44,8 @@ pipeline {
             }
         }
 
-        stage('Construir imagen Docker') {
 
-        }
 
-        stage('Desplegar en Kubernetes') {
-
-        }
     }
 
     post {
