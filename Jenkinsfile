@@ -44,7 +44,11 @@ pipeline {
             }
         }
 
-
+        stage('Construir imagen Docker') {
+            steps {
+                sh 'docker build -t jenkins:v1 .'
+            }
+        }
 
     }
 
