@@ -50,16 +50,28 @@ pipeline {
             }
         }
 
-        stage('Desplegar en Kubernetes') {
+        stage('Preparar Minikube') {
             steps {
                 sh '''
+                    echo "Otorgando permisos al directorio .minikube"
+                    sudo chown -R $USER $HOME/.minikube || true
+                    sudo chmod -R u+wrx $HOME/.minikube || true
+
+                    echo "Iniciando Minikube con driver Docker"
                     minikube start --driver=docker || true
-                    kubectl apply -f k8s/deployment.yaml
-                    kubectl apply -f k8s/service.yaml
                 '''
             }
         }
 
+        stage('Desplegar en Kubernetes') {
+            steps {
+                sh '''
+                    echo "Aplicando deployment y service en Kubernetes"
+                    kubectl apply -f k8s/deployment.yaml || exit 1
+                    kubectl apply -f k8s/service.yaml || exit 1
+                '''
+            }
+        }
     }
 
     post {
